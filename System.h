@@ -39,6 +39,7 @@ public:
 	void updateEfficacyCap();
 
 	void destroy();
+	void enable();
 	void disable();
 
 private:
@@ -46,6 +47,7 @@ private:
 	bool status;
 	float efficacy;
 	float efficacy_cap;
+	float efficacy_cap_buffer;
 	int power_expected;
 	int power_allocated;
 	vector<System*> reliant_systems;

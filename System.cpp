@@ -11,6 +11,7 @@ System::System() {
 	status = true;
 	efficacy = 100.0;
 	efficacy_cap = 200.0;
+	efficacy_cap_buffer = efficacy_cap;
 	power_expected = BASE_POWER_EXPECTED;
 	power_allocated = power_expected;
 }
@@ -20,6 +21,7 @@ System::System(string new_name, bool stat, float eff, float efc, int pex, int pa
 	status = stat;
 	efficacy = eff;
 	efficacy_cap = efc;
+	efficacy_cap_buffer = efficacy_cap;
 	power_expected = pex;
 	power_allocated = pal;
 }
@@ -111,8 +113,13 @@ void System::destroy() {
 }
 
 void System::disable() {
+	efficacy_cap_buffer = efficacy_cap;
 	setEfficacyCap(0.0);
 	setPowerAllocated(0);
+}
+
+void System::enable() {
+	setEfficacyCap(efficacy_cap_buffer);
 }
 
 void System::updateEfficacy() {

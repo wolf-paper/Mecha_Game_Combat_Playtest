@@ -23,10 +23,17 @@ public:
 	void setStatus(bool);
 	
 	float getMass();
-	void setMass(float);
+	void updateMass();
+
+	float getHeight();
+	void setHeight(float);
+
+	float getMassFactor();
+	void updateMassFactor();
 
 	float getReactionSpeed();
 	float getBaseSpeed();
+	void updateReactionSpeed();
 	void setReactionSpeed(float);
 
 	float getEvasion();
@@ -42,6 +49,7 @@ public:
 	void setThrust(float);
 
 	float getTemperature();
+	void updateTemperature();
 	void setTemperature(float);
 
 	float getTemperatureCap();
@@ -62,8 +70,10 @@ public:
 private:
 	string name;
 	bool status;
+	bool power_override;
 
 	float mass;
+	float height;
 	float mass_factor;
 	float reaction_speed;
 	float evasion;
@@ -73,6 +83,7 @@ private:
 	float temperature_cap;
 
 	vector<Limb*> limbs;
+	vector<System*> systems;
 	vector<System*> controllable_systems;
 	vector<System*> key_systems;
 	vector<Weapon*> weapons;
@@ -91,8 +102,8 @@ private:
 	Limb* LeftLeg;
 	Limb* RightLeg;
 
-	MountPoint* Head;
-	MountPoint* LeftShouler;
+	MountPoint* Skull;
+	MountPoint* LeftShoulder;
 	MountPoint* RightShoulder;
 	MountPoint* Chest;
 	MountPoint* Stomach;
