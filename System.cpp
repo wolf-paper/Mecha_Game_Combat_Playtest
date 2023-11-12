@@ -2,6 +2,7 @@
 #include <string>
 #include "System.h"
 #include "MountPoint.h"
+#include "Mecha.h"
 #include "Accord_Combat_Playtest.cpp"
 using namespace std;
 

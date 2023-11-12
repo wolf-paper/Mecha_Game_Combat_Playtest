@@ -40,6 +40,10 @@ public:
 	void addWeaponUnreciprocated(Weapon*);
 	vector<Weapon*> getAttachedWeapons();
 
+	void addLimb(Limb*);
+	void addLimbUnreciprocated(Limb*);
+	Limb* getLimb();
+
 	void damage(float, float, float);
 	void destroy();
 
@@ -54,5 +58,6 @@ private:
 	float armor_remaining;
 	vector<System*> systems;
 	vector<Weapon*> weapons;
+	Limb* limb;
 };
 

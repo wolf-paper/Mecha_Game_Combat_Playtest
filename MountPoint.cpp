@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <iostream>
 #include "MountPoint.h"
 #include "System.h"
 #include "Weapon.h"
@@ -103,6 +104,11 @@ vector<Weapon*> MountPoint::getAttachedWeapons() {
 	return weapons;
 }
 
+void MountPoint::addLimb(Limb* newlimb) {
+	limb = newlimb;
+	limb->addMountPointUnreciprocated(this);
+}
+
 
 void MountPoint::damage(float dmg, float pen, float shred) {
 	float net_damage;
@@ -118,6 +124,9 @@ void MountPoint::damage(float dmg, float pen, float shred) {
 	if (hp == 0) {
 		destroy();
 	}
+	else {
+		cout << this->getLimb()->getMecha()->getName() << "'s " << this->getName() << " has taken " << net_damage + pierced_damage << " damage." << endl;
+	}
 }
 
 void MountPoint::destroy() {
@@ -127,4 +136,5 @@ void MountPoint::destroy() {
 	for (Weapon* wep : weapons) {
 		wep->destroy();
 	}
+	cout << this->getLimb()->getMecha()->getName() << "'s " << this->getName() << " has been destroyed." << endl;
 }

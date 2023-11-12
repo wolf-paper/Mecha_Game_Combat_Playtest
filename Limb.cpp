@@ -17,7 +17,6 @@ Limb::Limb(string new_name, bool stat, float lma) {
 string Limb::getName() {
 	return name;
 }
-
 void Limb::setName(string new_name) {
 	name = new_name;
 }
@@ -25,7 +24,6 @@ void Limb::setName(string new_name) {
 bool Limb::getStatus() {
 	return status;
 }
-
 void Limb::setStatus(bool stat) {
 	status = stat;
 }
@@ -33,16 +31,25 @@ void Limb::setStatus(bool stat) {
 float Limb::getLimbMass() {
 	return limb_mass;
 }
-
 void Limb::setLimbMass(float lma) {
 	limb_mass = lma;
+}
+
+Mecha* Limb::getMecha() {
+	return mecha;
+}
+void Limb::setMecha(Mecha* newmecha) {
+	mecha = newmecha;
 }
 
 vector<MountPoint*> Limb::getMountPoints() {
 	return mountpoints;
 }
-
 void Limb::addMountPoint(MountPoint* frame) {
+	mountpoints.push_back(frame);
+	frame->addLimbUnreciprocated(this);
+}
+void Limb::addMountPointUnreciprocated(MountPoint* frame) {
 	mountpoints.push_back(frame);
 }
 

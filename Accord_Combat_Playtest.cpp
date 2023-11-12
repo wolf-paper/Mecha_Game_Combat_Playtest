@@ -4,9 +4,6 @@
 #include <iostream>
 
 
-#define BASE_POWER_EXPECTED 100
-#define MAXIMUM_THRESHOLD 1.35
-
 int main()
 {
     std::cout << "Hello World!\n";

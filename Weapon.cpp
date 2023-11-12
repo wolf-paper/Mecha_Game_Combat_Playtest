@@ -151,11 +151,25 @@ void Weapon::attack(Mecha* actor, Mecha* other, MountPoint* target) {
 		float threshold = (accuracy * actor->getAccuracy()) * (1 - (actor->getEvasion()/100));
 		int roll = rand() % 100;
 		if (roll <= threshold) {
+			float dmg = damage;
 			if (roll <= target->getTargetingDifficulty()) {
-				if (melee) {
-					float dmg = (damage * ) //dmg * (actor limb mass + weapon mass) * (actor->Thrusters.getEfficacy())
+				vector<MountPoint*> mps = target->getLimb()->getMountPoints();
+				int index = rand() % mps.size();
+				if (mps.at(index) != target) {
+					target = mps.at(index);
+				}
+				else {
+					cout << actor->getName() << "'s attack has missed." << endl;
+					return;
 				}
 			}
+			if (melee) {
+				dmg = (damage * (target->getLimb()->getLimbMass() + weapon_mass) * actor->getThrusters()->getEfficacy());
+			}
+			target->damage(dmg, penetration, shred);
+		}
+		else {
+			cout << actor->getName() << "'s attack has missed." << endl;
 		}
 	}
 }
