@@ -9,6 +9,7 @@ class Limb
 {
 public:
 	Limb();
+	Limb(string);
 	Limb(string, bool, float);
 	
 	string getName();

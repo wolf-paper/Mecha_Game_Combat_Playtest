@@ -23,87 +23,62 @@ Mecha::Mecha() {
 	temperature = 0.0;
 	temperature_cap = 200;
 
-	// Initializing Systems...
-	systems = { Targeting, Sensors, Thrusters, Power, Coolant, Cockpit };
-	controllable_systems = { Targeting, Sensors, Thrusters, Coolant };
-	key_systems = { Sensors, Power, Cockpit };
-	for (System* system : systems) {
-		system = new System();
-	}
-	Targeting->setName("Targeting");
-	Sensors->setName("Sensors");
-	Thrusters->setName("Thrusters");
-	Power->setName("Power");
-	Coolant->setName("Coolant");
-	Cockpit->setName("Life Support");
-
-	// Initializing Limbs...
-	limbs = { Head, Torso, LeftArm, RightArm, LeftLeg, RightLeg };
-	for (Limb* limb : limbs) {
-		limb = new Limb();
-		limb->setMecha(this);
-	}
-	Head->setName("Head");
-	Torso->setName("Torso");
-	LeftArm->setName("Left Arm");
-	RightArm->setName("Right Arm");
-	LeftLeg->setName("Left Leg");
-	RightLeg->setName("Right Leg");
-
 	// Initializing MountPoints: Head...
-	Skull = new MountPoint();
-	Skull->setName("Head");
-	Head->addMountPoint(Skull);
-
+	vector<MountPoint*> head_mps = { Skull };
+	Skull = new MountPoint("Head");
+	
 	// Initializing MountPoints: Torso...
 	vector<MountPoint*> torso_mps = { LeftShoulder, RightShoulder, Chest, Stomach, InnerChest };
-	for (MountPoint* mp : torso_mps) {
-		mp = new MountPoint();
-		Torso->addMountPoint(mp);
-	}
-	LeftShoulder->setName("Left Shoulder");
-	RightShoulder->setName("Right Shoulder");
-	Chest->setName("Chest");
-	InnerChest->setName("Inner Chest");
-	Stomach->setName("Stomach");
+	LeftShoulder = new MountPoint("Left Shoulder");
+	RightShoulder = new MountPoint("Right Shoulder");
+	Chest = new MountPoint("Chest");
+	InnerChest = new MountPoint("Inner Chest");
+	Stomach = new MountPoint("Stomach");
 
 	// Initializing MountPoints: Arms...
 	vector<MountPoint*> l_arm_mps = { UpperLeftArm, LowerLeftArm, LeftHand };
-	for (MountPoint* mp : l_arm_mps) {
-		mp = new MountPoint();
-		LeftArm->addMountPoint(mp);
-	}
-	UpperLeftArm->setName("Upper Left Arm");
-	LowerLeftArm->setName("Lower Left Arm");
-	LeftHand->setName("Left Hand");
+	UpperLeftArm = new MountPoint("Upper Left Arm");
+	LowerLeftArm = new MountPoint("Lower Left Arm");
+	LeftHand = new MountPoint("Left Hand");
 
 	vector<MountPoint*> r_arm_mps = { UpperRightArm, LowerRightArm, RightHand };
-	for (MountPoint* mp : r_arm_mps) {
-		mp = new MountPoint();
-		RightArm->addMountPoint(mp);
-	}
-	UpperRightArm->setName("Upper Right Arm");
-	LowerRightArm->setName("Lower Right Arm");
-	RightHand->setName("Right Hand");
+	UpperRightArm = new MountPoint("Upper Right Arm");
+	LowerRightArm = new MountPoint("Lower Right Arm");
+	RightHand = new MountPoint("Right Hand");
 
 	// Initializing MountPoints: Legs...
 	vector<MountPoint*> l_leg_mps = { UpperLeftLeg, LowerLeftLeg, LeftFoot };
-	for (MountPoint* mp : l_leg_mps) {
-		mp = new MountPoint();
-		LeftLeg->addMountPoint(mp);
-	}
-	UpperLeftLeg->setName("Upper Left Leg");
-	LowerLeftLeg->setName("Lower Left Leg");
-	LeftFoot->setName("Left Foot");
+	UpperLeftLeg = new MountPoint("Upper Left Leg");
+	LowerLeftLeg = new MountPoint("Lower Left Leg");
+	LeftFoot = new MountPoint("Left Foot");
 
 	vector<MountPoint*> r_leg_mps = { UpperRightLeg, LowerRightLeg, RightFoot };
-	for (MountPoint* mp : r_leg_mps) {
-		mp = new MountPoint();
-		RightLeg->addMountPoint(mp);
-	}
-	UpperRightLeg->setName("Upper Right Leg");
-	LowerRightLeg->setName("Lower Right Leg");
-	RightFoot->setName("Right Foot");
+	UpperRightLeg = new MountPoint("Upper Right Leg");
+	LowerRightLeg = new MountPoint("Lower Right Leg");
+	RightFoot = new MountPoint("Right Foot");
+
+	// Initializing Limbs...
+
+	addLimbDeclared(Head, "Head", head_mps);
+	addLimbDeclared(Torso, "Torso", torso_mps);
+	addLimbDeclared(LeftArm, "Left Arm", l_arm_mps);
+	addLimbDeclared (RightArm, "Right Arm", r_arm_mps);
+	addLimbDeclared(LeftLeg, "Left Leg", l_leg_mps);
+	addLimbDeclared(RightLeg, "Right Leg", r_leg_mps);
+
+	// Initializing Systems...
+	vector<MountPoint*> targeting_mps = { Skull, LowerLeftArm, LowerRightArm };
+	vector<MountPoint*> sensor_mps = { Skull, Chest };
+	vector<MountPoint*> thruster_mps = { Chest, UpperLeftLeg, LowerLeftLeg, UpperRightLeg, LowerRightLeg };
+	vector<MountPoint*> power_mps = { InnerChest, Stomach };
+	vector<MountPoint*> coolant_mps = { Chest, InnerChest, Stomach };
+	vector<MountPoint*> cockpit_mps = { InnerChest };
+	addSystemDeclared(Targeting, "Targeting", targeting_mps);
+	addSystemDeclared(Sensors, "Sensors", sensor_mps);
+	addSystemDeclared(Thrusters, "Thrusters", thruster_mps);
+	addSystemDeclared(Power, "Power", power_mps);
+	addSystemDeclared(Coolant, "Coolant", coolant_mps);
+	addSystemDeclared(Cockpit, "Life Support", cockpit_mps);
 
 	// Establishing Reliant Systems...
 	for (System* sys : systems) {
@@ -111,23 +86,9 @@ Mecha::Mecha() {
 	}
 	Targeting->addReliantSystem(Sensors);
 
-	// Connecting Systems to MountPoint...
-	Targeting->addMountPoint(Skull);
-	Targeting->addMountPoint(LowerLeftArm);
-	Targeting->addMountPoint(LowerRightArm);
-	Sensors->addMountPoint(Skull);
-	Sensors->addMountPoint(Chest);
-	Thrusters->addMountPoint(Chest);
-	Thrusters->addMountPoint(UpperLeftLeg);
-	Thrusters->addMountPoint(LowerLeftLeg);
-	Thrusters->addMountPoint(UpperRightLeg);
-	Thrusters->addMountPoint(LowerRightLeg);
-	Power->addMountPoint(InnerChest);
-	Power->addMountPoint(Stomach);
-	Coolant->addMountPoint(Chest);
-	Coolant->addMountPoint(InnerChest);
-	Coolant->addMountPoint(Stomach);
-	Cockpit->addMountPoint(InnerChest);
+	// Establishing Controllable and Key Systems
+	controllable_systems = { Targeting, Sensors, Thrusters, Coolant };
+	key_systems = { Sensors, Power, Cockpit };
 
 	// Initialization Complete
 }
@@ -227,8 +188,82 @@ void Mecha::updateTemperature() {
 			Power->setPowerAllocated(BASE_POWER_EXPECTED);
 		}
 	}
-	else {
-		temperature += ((.05 * temperature_cap) * (Power->getEfficacy() / 100));
+	else if (Power->getEfficacyCap() == 200) {
+		temperature += (.05 * temperature_cap);
 	}
+	else {
+		temperature += ((.05 * temperature_cap) / (1 - (Power->getEfficacyCap() / 200))); 
+	}
+	if (temperature >= temperature_cap) {
+		power_override = true;
+		Power->disable();
+	}
+}
+void Mecha::activateCoolant() {
+	temperature -= (.02 * (Coolant->getEfficacy() / 100) * temperature_cap);
+}
+void Mecha::setTemperature(float tmp) {
+	temperature = tmp;
+	updateTemperature();
+	activateCoolant(); // Any forcible changes to temperature would cause coolant to kick in preemptively
+}
 
+float Mecha::getTemperatureCap() {
+	return temperature_cap;
+}
+void Mecha::setTemperatureCap(float tmc) {
+	temperature_cap = tmc;
+	updateTemperature();
+	activateCoolant(); // Any forcible changes to temperature cap would cause coolant to kick in preemptively
+}
+
+vector<Limb*> Mecha::getLimbs() {
+	return limbs;
+}
+void Mecha::addLimb(Limb* limb, vector<MountPoint*> mps) {
+	for (MountPoint* mp : mps) {
+		limb->addMountPoint(mp);
+	}
+	limbs.push_back(limb);
+	limb->setMecha(this);
+}
+void Mecha::addLimbDeclared(Limb* limb, string name, vector<MountPoint*> mps) {
+	limb = new Limb(name);
+	addLimb(limb, mps);
+}
+
+vector<System*> Mecha::getSystems() {
+	return systems;
+}
+void Mecha::addSystem(System* sys, vector<MountPoint*> mps) {
+	for (MountPoint* mp : mps) {
+		sys->addMountPoint(mp);
+	}
+	systems.push_back(sys);
+}
+void Mecha::addSystemDeclared(System* sys, string name, vector<MountPoint*> mps) {
+	sys = new System(name);
+	addSystem(sys, mps);
+}
+
+vector<System*> Mecha::getControllableSystems() {
+	return controllable_systems;
+}
+void Mecha::addControllableSystem(System* sys) {
+	controllable_systems.push_back(sys);
+}
+
+vector<System*> Mecha::getKeySystems() {
+	return key_systems;
+}
+void Mecha::addKeySystem(System* sys) {
+	key_systems.push_back(sys);
+}
+
+vector<Weapon*> Mecha::getWeapons() {
+	return weapons;
+}
+void Mecha::addWeapon(Weapon* wep, MountPoint* mp) {
+	weapons.push_back(wep);
+	wep->addMountPoint(mp);
 }

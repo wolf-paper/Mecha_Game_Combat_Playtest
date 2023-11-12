@@ -9,6 +9,7 @@ class MountPoint
 {
 public:
 	MountPoint();
+	MountPoint(string);
 	MountPoint(string, bool, int, int, float, float, float);
 	
 	string getName();

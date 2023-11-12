@@ -50,13 +50,19 @@ public:
 
 	float getTemperature();
 	void updateTemperature();
+	void activateCoolant(); // Don't like this tbh
 	void setTemperature(float);
 
 	float getTemperatureCap();
 	void setTemperatureCap(float);
 	
 	vector<Limb*> getLimbs();
-	void addLimb(Limb*);
+	void addLimb(Limb*, vector<MountPoint*>);
+	void addLimbDeclared(Limb*, string, vector<MountPoint*>);
+
+	vector<System*> getSystems();
+	void addSystem(System*, vector<MountPoint*>);
+	void addSystemDeclared(System*, string, vector<MountPoint*>);
 
 	vector<System*> getControllableSystems();
 	void addControllableSystem(System*);
@@ -65,7 +71,7 @@ public:
 	void addKeySystem(System*);
 
 	vector<Weapon*> getWeapons();
-	void addWeapon(Weapon*);
+	void addWeapon(Weapon*, MountPoint*);
 
 private:
 	string name;
@@ -81,6 +87,9 @@ private:
 	float thrust;
 	float temperature;
 	float temperature_cap;
+	float power_generated;
+	float power_allocated;
+	float power_available;
 
 	vector<Limb*> limbs;
 	vector<System*> systems;

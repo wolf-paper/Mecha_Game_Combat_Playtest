@@ -7,6 +7,11 @@ Limb::Limb() {
 	status = true;
 	limb_mass = 5.0;
 }
+Limb::Limb(string newname) {
+	name = newname;
+	status = true;
+	limb_mass = 5.0;
+}
 
 Limb::Limb(string new_name, bool stat, float lma) {
 	name = new_name;

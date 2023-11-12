@@ -16,6 +16,16 @@ MountPoint::MountPoint() {
 	armor_remaining = 100;
 }
 
+MountPoint::MountPoint(string new_name) {
+	name = new_name;
+	status = true;
+	max_hp = 500;
+	hp = max_hp;
+	targeting_difficulty = 25;
+	armor = 300;
+	armor_remaining = 100;
+}
+
 MountPoint::MountPoint(string new_name, bool stat, int maxhp, int currhp, float td, float arm, float ar) {
 	name = new_name;
 	status = stat;

@@ -8,6 +8,7 @@ class System
 {
 public:
 	System();
+	System(string);
 	System(string, bool, float, float, int, int);
 
 	string getName();

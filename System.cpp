@@ -14,6 +14,15 @@ System::System() {
 	efficacy_cap_buffer = efficacy_cap;
 	power_expected = BASE_POWER_EXPECTED;
 	power_allocated = power_expected;
+
+}System::System(string new_name) {
+	name = new_name;
+	status = true;
+	efficacy = 100.0;
+	efficacy_cap = 200.0;
+	efficacy_cap_buffer = efficacy_cap;
+	power_expected = BASE_POWER_EXPECTED;
+	power_allocated = power_expected;
 }
 
 System::System(string new_name, bool stat, float eff, float efc, int pex, int pal) {
