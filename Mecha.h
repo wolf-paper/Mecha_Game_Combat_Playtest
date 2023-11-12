@@ -26,13 +26,20 @@ public:
 	void setMass(float);
 
 	float getReactionSpeed();
+	float getBaseSpeed();
 	void setReactionSpeed(float);
 
 	float getEvasion();
+	float getBaseEvasion();
 	void setEvasion(float);
 
 	float getAccuracy();
+	float getBaseAccuracy();
 	void setAccuracy(float);
+
+	float getThrust();
+	float getBaseThrust();
+	void setThrust(float);
 
 	float getTemperature();
 	void setTemperature(float);
@@ -40,6 +47,18 @@ public:
 	float getTemperatureCap();
 	void setTemperatureCap(float);
 	
+	vector<Limb*> getLimbs();
+	void addLimb(Limb*);
+
+	vector<System*> getControllableSystems();
+	void addControllableSystem(System*);
+
+	vector<System*> getKeySystems();
+	void addKeySystem(System*);
+
+	vector<Weapon*> getWeapons();
+	void addWeapon(Weapon*);
+
 private:
 	string name;
 	bool status;
@@ -49,6 +68,7 @@ private:
 	float reaction_speed;
 	float evasion;
 	float accuracy;
+	float thrust;
 	float temperature;
 	float temperature_cap;
 

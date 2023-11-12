@@ -155,6 +155,9 @@ void Weapon::attack(Mecha* actor, Mecha* other, MountPoint* target) {
 			if (roll <= target->getTargetingDifficulty()) {
 				vector<MountPoint*> mps = target->getLimb()->getMountPoints();
 				int index = rand() % mps.size();
+				while (!mps.at(index)->getStatus()) {
+					index = rand() % mps.size();
+				}
 				if (mps.at(index) != target) {
 					target = mps.at(index);
 				}
@@ -164,7 +167,7 @@ void Weapon::attack(Mecha* actor, Mecha* other, MountPoint* target) {
 				}
 			}
 			if (melee) {
-				dmg = (damage * (target->getLimb()->getLimbMass() + weapon_mass) * actor->getThrusters()->getEfficacy());
+				dmg = (damage * (target->getLimb()->getLimbMass() + weapon_mass) * actor->getThrust());
 			}
 			target->damage(dmg, penetration, shred);
 		}
